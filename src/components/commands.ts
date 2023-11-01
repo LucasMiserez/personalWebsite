@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { commandFunctions } from "@/components/functions";
 
 export const commands = ref([]) as { value: string[] };
 export const commandInput = ref(null) as { value: string | null };
@@ -6,20 +7,22 @@ export const allCommands = ref([]) as { value: string[] };
 export const reply = ref<ReplyItem[]>([]);
 export const inputRef = ref(null) as { value: HTMLInputElement | null };
 
-const commandList = [
-  "help",
+let index = 0;
+
+export const commandList = [
+  "clear",
   "contact",
   "github",
+  "help",
+  "history",
   "linkedin",
-  "resume",
   "projects",
+  "resume",
   "skills",
   "whoami",
-  "clear",
-  "history",
 ];
 
-const skillsList = [
+export const skillsList = [
   "Bash",
   "C#",
   "CSS",
@@ -65,7 +68,7 @@ export function changeCommandColor() {
   inputRef.value?.classList.add("text-red-500");
 }
 
-export function handleTabKey(event: KeyboardEvent) {
+export function handleKeyPress(event: KeyboardEvent) {
   if (event.key === "Tab") {
     event.preventDefault();
     if (commandInput.value == null || commandInput.value.length === 0) {
@@ -79,6 +82,29 @@ export function handleTabKey(event: KeyboardEvent) {
     } else if (matchingCommands.length > 1) {
       tabCommands(matchingCommands);
     }
+    return;
+  }
+  if (event.key == "ArrowUp" && allCommands.value.length > index) {
+    index++;
+    commandInput.value = allCommands.value[allCommands.value.length - index];
+    changeCommandColor();
+    setTimeout(function () {
+      if (inputRef.value != null) {
+        inputRef.value.selectionStart = inputRef.value.selectionEnd = 10000;
+      }
+    }, 0);
+    return;
+  }
+  if (event.key == "ArrowDown" && index > 0) {
+    index--;
+    if (index == 0) {
+      commandInput.value = "";
+      resetColor();
+      return;
+    }
+    commandInput.value = allCommands.value[allCommands.value.length - index];
+    changeCommandColor();
+    return;
   }
 }
 
@@ -87,6 +113,7 @@ function getMatchingCommands(input: string) {
 }
 
 function tabCommands(matchingCommands: string[]) {
+  commandFunctions["clear"]();
   matchingCommands.forEach((command) => {
     reply.value.push({ htmlText: command, htmlType: "click" });
   });
@@ -95,10 +122,11 @@ function tabCommands(matchingCommands: string[]) {
 export function handleCommand(command: string) {
   resetColor();
   reply.value = [];
-  commands.value.push(command);
+  commands.value.push(command as string);
+  if (command == null || command.length === 0) return;
   const commandNormalized = command.toLowerCase().trim();
   if (commandList.includes(commandNormalized)) {
-    eval(commandNormalized + "()");
+    commandFunctions[commandNormalized]();
     if (commandNormalized !== "history") {
       allCommands.value.push(command);
     }
@@ -117,185 +145,7 @@ export function commandClick(command: string) {
   changeCommandColor();
 }
 
-function help() {
-  reply.value.push({
-    htmlText: "Available commands:",
-    htmlType: "text",
-    htmlClass: ["text-xl", "font-bold", "underline", "mb-5"],
-  });
-  commandList.forEach((command) => {
-    reply.value.push({
-      htmlText: command,
-      htmlType: "click",
-      htmlClass: ["hover:underline", "mb-1"],
-    });
-  });
-}
-
-function clear() {
-  commands.value = [];
-  reply.value = [];
-}
-
-function history() {
-  if (allCommands.value.length === 0) {
-    reply.value.push({
-      htmlText: "No commands in history",
-      htmlType: "text",
-      htmlClass: ["font-bold"],
-    });
-    return;
-  }
-  allCommands.value.forEach((command) => {
-    reply.value.push({ htmlText: command, htmlType: "click" });
-  });
-}
-
-function github() {
-  reply.value.push({
-    htmlText: "Feel free to check out my GitHub:",
-    htmlType: "text",
-    htmlClass: ["text-xl", "mb-5", "font-bold"],
-  });
-  reply.value.push({
-    htmlText: "https://github.com/LucasMiserez",
-    htmlLink: "https://github.com/LucasMiserez",
-    htmlType: "link",
-    htmlClass: ["underline"],
-  });
-}
-
-function linkedin() {
-  reply.value.push({
-    htmlText: "Feel free to check out my LinkedIn:",
-    htmlType: "text",
-    htmlClass: ["text-xl", "mb-5", "font-bold"],
-  });
-  reply.value.push({
-    htmlText: "https://www.linkedin.com/in/lucas-miserez/",
-    htmlLink: "https://www.linkedin.com/in/lucas-miserez/",
-    htmlType: "link",
-    htmlClass: ["underline"],
-  });
-}
-
-function resume() {
-  reply.value.push({
-    htmlText: "https://cv-lucasmiserez.vercel.app/",
-    htmlType: "iframe",
-    htmlClass: ["border-none", "h-[40rem]"],
-  });
-}
-
-function skills() {
-  reply.value.push({
-    htmlText: "Some of my skills:",
-    htmlType: "text",
-    htmlClass: ["text-xl", "mb-5", "font-bold"],
-  });
-  skillsList.forEach((command) => {
-    reply.value.push({
-      htmlText: command,
-      htmlType: "text",
-      htmlClass: ["mb-1"],
-    });
-  });
-}
-
-function whoami() {
-  const age = new Date().getFullYear() - 2003;
-
-  reply.value.push({
-    htmlText: "Hi everyone!",
-    htmlType: "text",
-    htmlClass: ["text-xl", "mb-5", "font-bold"],
-  });
-  reply.value.push({
-    htmlText: "Name: Lucas Miserez",
-    htmlType: "text",
-    htmlClass: ["mb-1"],
-  });
-  reply.value.push({
-    htmlText: `Age: ${age}`,
-    htmlType: "text",
-    htmlClass: ["mb-1"],
-  });
-  reply.value.push({
-    htmlText: "Location: Brussels",
-    htmlType: "text",
-    htmlClass: ["mb-1"],
-  });
-  reply.value.push({
-    htmlText: "Field: web and software development",
-    htmlType: "text",
-    htmlClass: ["mb-1"],
-  });
-  reply.value.push({
-    htmlText: "OS: Debian (Linux)",
-    htmlType: "text",
-  });
-  reply.value.push({
-    htmlText: "------------------------------------",
-    htmlType: "text",
-    htmlClass: ["text-xl", "my-5", "font-bold"],
-  });
-  reply.value.push({
-    htmlText: "My Github",
-    htmlLink: "https://github.com/LucasMiserez",
-    htmlType: "link",
-    htmlClass: ["underline", "mb-1"],
-  });
-  reply.value.push({
-    htmlText: "My LinkedIn",
-    htmlLink: "https://www.linkedin.com/in/lucas-miserez/",
-    htmlType: "link",
-    htmlClass: ["underline", "mb-1"],
-  });
-  reply.value.push({
-    htmlText: "My Resume(s)",
-    htmlLink: "https://cv-lucasmiserez.vercel.app/",
-    htmlType: "link",
-    htmlClass: ["underline", "mb-1"],
-  });
-  reply.value.push({
-    htmlText: "---------------skills---------------",
-    htmlType: "text",
-    htmlClass: ["text-xl", "my-5", "font-bold"],
-  });
-  reply.value.push({
-    htmlText:
-      "Bash | C# | CSS | Firebase | Git | HTML | Ionic | Java | JavaScript | Kotlin | Linux | Next.js | Pandas | PHP | PostgreSQL | PowerBi | Python | React | SQL | Supabase | Vue.js",
-    htmlType: "text",
-    htmlClass: ["mb-1"],
-  });
-}
-
-function contact() {
-  reply.value.push({
-    htmlText: "Feel free to contact me!",
-    htmlType: "text",
-    htmlClass: ["text-xl", "mb-5", "font-bold"],
-  });
-  reply.value.push({
-    htmlText: "miserez.lucas@gmail.com",
-    htmlType: "link",
-    htmlLink: "mailto:miserez.lucas@gmail.com",
-    htmlClass: ["underline", "mb-1"],
-  });
-  reply.value.push({
-    htmlText: "------------------------------------",
-    htmlType: "text",
-    htmlClass: ["text-xl", "my-5", "font-bold"],
-  });
-  reply.value.push({
-    htmlText: "My LinkedIn",
-    htmlLink: "https://www.linkedin.com/in/lucas-miserez/",
-    htmlType: "link",
-    htmlClass: ["underline", "mb-1"],
-  });
-}
-
 export function emptyTab() {
   reply.value = [];
-  help();
+  commandFunctions["help"]();
 }

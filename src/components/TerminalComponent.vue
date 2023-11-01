@@ -6,7 +6,7 @@ import {
   commandInput,
   inputRef,
   changeCommandColor,
-  handleTabKey,
+  handleKeyPress,
 } from "./commands";
 
 onMounted(() => {
@@ -25,23 +25,17 @@ const submitCommand = () => {
 </script>
 
 <template>
-  <div class="w-full">
-    <p><span v-for="n in 46" :key="n">---</span></p>
+  <div class="w-full xl:w-1/3">
     <h1 class="text-3xl font-bold text-center">Terminal</h1>
-    <p><span v-for="n in 46" :key="n">---</span></p>
-    <div class="overflow-y-auto h-[40rem]">
-      <div
-        v-for="(item, index) in commands"
-        :key="index"
-        class="flex overflow-y-auto"
-      >
+    <ul class="overflow-y-auto h-[10rem] sm:h-[40rem]">
+      <li v-for="(item, index) in commands" :key="index" class="flex">
         <span>(base)</span>
         <span>:</span>
         <span class="text-blue-500">~</span>
         <span>$&nbsp</span>
         <p>{{ item }}</p>
-      </div>
-      <ul class="flex">
+      </li>
+      <li class="flex">
         <span>(base)</span>
         <span>:</span>
         <span class="text-blue-500">~</span>
@@ -53,11 +47,11 @@ const submitCommand = () => {
             type="text"
             class="bg-transparent border-none outline-none"
             @input="changeCommandColor"
-            @keydown="handleTabKey"
+            @keydown="handleKeyPress"
           />
         </form>
-      </ul>
-    </div>
+      </li>
+    </ul>
   </div>
 </template>
 

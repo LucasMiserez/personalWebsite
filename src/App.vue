@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <div class="flex flex-col justify-center mx-auto w-4/5 mt-10">
+  <div class="flex flex-col justify-center mx-auto sm:w-full lg:mt-10">
     <RouterView />
   </div>
 </template>

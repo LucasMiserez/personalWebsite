@@ -3,12 +3,10 @@ import { reply, commandClick } from "./commands";
 </script>
 
 <template>
-  <div class="w-full">
-    <p><span v-for="n in 46" :key="n">---</span></p>
+  <div class="w-full xl:w-1/3">
     <h1 class="text-3xl font-bold text-center">Output</h1>
-    <p><span v-for="n in 46" :key="n">---</span></p>
-    <div class="overflow-y-auto h-[40rem]">
-      <div
+    <ul class="overflow-y-auto h-full sm:h-[40rem]">
+      <li
         v-if="reply"
         v-for="(value, index) in reply"
         :key="index"
@@ -39,8 +37,8 @@ import { reply, commandClick } from "./commands";
         <p v-else :class="value.htmlClass">
           {{ value.htmlText }}
         </p>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </template>
 
