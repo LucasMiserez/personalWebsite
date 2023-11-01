@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reply, historyClick, types } from './commands'
+import { reply, commandClick } from "./commands";
 </script>
 
 <template>
@@ -7,27 +7,39 @@ import { reply, historyClick, types } from './commands'
     <p><span v-for="n in 46" :key="n">---</span></p>
     <h1 class="text-3xl font-bold text-center">Output</h1>
     <p><span v-for="n in 46" :key="n">---</span></p>
-    <div v-for="(item, index) in reply" :key="index" class="flex overflow-y-auto">
-      <button v-if="types.toString() == 'click'" @click="historyClick(item.toLocaleString())">
-        {{ item }}
-      </button>
-      <a
-        v-else-if="types.toString() == 'link'"
-        :href="item.toString()"
-        target="_blank"
-        class="underline"
+    <div class="overflow-y-auto h-[40rem]">
+      <div
+        v-if="reply"
+        v-for="(value, index) in reply"
+        :key="index"
+        class="flex overflow-y-auto"
       >
-        {{ item }}
-      </a>
-      <iframe
-        v-else-if="types.toString() == 'iframe'"
-        :src="item.toString()"
-        width="100%"
-        class="border-none h-[40rem]"
-      ></iframe>
-      <p v-else>
-        {{ item }}
-      </p>
+        <button
+          v-if="value.htmlType.toString() === 'click'"
+          @click="commandClick(value.htmlText.toString())"
+          :class="value.htmlClass"
+        >
+          {{ value.htmlText }}
+        </button>
+
+        <a
+          v-else-if="value.htmlType.toString() == 'link'"
+          :href="value.htmlLink?.toString()"
+          target="_blank"
+          :class="value.htmlClass"
+        >
+          {{ value.htmlText }}
+        </a>
+        <iframe
+          v-else-if="value.htmlType.toString() == 'iframe'"
+          :src="value.htmlText.toString()"
+          width="100%"
+          :class="value.htmlClass"
+        ></iframe>
+        <p v-else :class="value.htmlClass">
+          {{ value.htmlText }}
+        </p>
+      </div>
     </div>
   </div>
 </template>

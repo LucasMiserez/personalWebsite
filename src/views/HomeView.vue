@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import TerminalComponent from '@/components/TerminalComponent.vue'
-import OutputComponent from '@/components/OutputComponent.vue'
+import TerminalComponent from "@/components/TerminalComponent.vue";
+import OutputComponent from "@/components/OutputComponent.vue";
+import { emptyTab } from "@/components/commands";
 </script>
 
 <template>
@@ -8,9 +9,13 @@ import OutputComponent from '@/components/OutputComponent.vue'
     <p class="text-center">
       -------------------------------------------------------------------------------------------------------------------
     </p>
-    <h1 class="text-3xl font-bold text-center"><a href="/">Lucas Miserez</a></h1>
+    <h1 class="text-3xl font-bold text-center">
+      <a href="/">Lucas Miserez</a>
+    </h1>
     <p class="text-center">
-      Welcome to my portfolio website! Enter 'help' to see the list of available commands
+      Welcome to my portfolio website! Enter
+      <button @click="emptyTab" class="font-bold">'help'</button>
+      to see the list of available commands
     </p>
     <p class="text-center">
       -------------------------------------------------------------------------------------------------------------------
