@@ -31,9 +31,3 @@ Welcome to my personal portfolio website, designed in a terminal-style interface
 ## Acknowledgments
 
 - Inspired by terminal-style interfaces and personal portfolio websites.
-
-## Contact
-
-- Email: [contact@lucas-miserez.be](mailto:contact@lucas-miserez.be)
-- GitHub: [https://github.com/yourusername](https://github.com/yourusername)
-- LinkedIn: [https://www.linkedin.com/in/yourprofile](https://www.linkedin.com/in/yourprofile)
