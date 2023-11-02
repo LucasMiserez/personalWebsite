@@ -1,46 +1,39 @@
-# website
+# Lucas Miserez - Personal Portfolio Website
 
-This template should help get you started developing with Vue 3 in Vite.
+[**Visit the Website**](https://lucas-miserez.be/)
 
-## Recommended IDE Setup
+## Description
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Welcome to my personal portfolio website, designed in a terminal-style interface. This website serves as a showcase of my skills, projects, and contact information in a unique and interactive format.
 
-## Type Support for `.vue` Imports in TS
+## Features
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+- **Terminal-Style Interface:** The website is designed to resemble a terminal, providing an interactive and engaging user experience.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+- **List of Projects:** Explore a curated list of my projects, each with its description and a link to the project.
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+- **Skills:** Discover the skills and technologies I have expertise in.
 
-## Customize configuration
+- **Contact Information:** Easily get in touch with me via email, GitHub, LinkedIn, or other contact methods.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- **Command-Driven Navigation:** Navigate through the website by using command-style inputs, similar to a real terminal.
 
-## Project Setup
+- **...**
 
-```sh
-npm install
-```
+## Technologies Used
 
-### Compile and Hot-Reload for Development
+- **Vue.js:** The website is built using Vue.js, a popular JavaScript framework for building user interfaces.
 
-```sh
-npm run dev
-```
+- **Tailwind CSS:** Tailwind CSS is used for styling and provides a modern and responsive design.
 
-### Type-Check, Compile and Minify for Production
+- **Typescript:** Typescript is used for scripting and interactivity on the website.
 
-```sh
-npm run build
-```
+## Acknowledgments
 
-### Lint with [ESLint](https://eslint.org/)
+- Inspired by terminal-style interfaces and personal portfolio websites.
 
-```sh
-npm run lint
-```
+## Contact
+
+- Email: [contact@lucas-miserez.be](mailto:contact@lucas-miserez.be)
+- GitHub: [https://github.com/yourusername](https://github.com/yourusername)
+- LinkedIn: [https://www.linkedin.com/in/yourprofile](https://www.linkedin.com/in/yourprofile)
